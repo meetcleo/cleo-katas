@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require 'thor'
+require_relative 'configuration'
 
 module CleoKatas
+  # CLI for managing katas. Run bin/cleo-katas to see available commands
   class CLI < Thor
     include Thor::Actions
 
-    source_root File.expand_path('../templates', __FILE__)
+    source_root File.expand_path('templates', __dir__)
     desc 'list', 'List all available katas'
     def list
       say 'Listing katas...'
@@ -15,10 +17,10 @@ module CleoKatas
       end
     end
 
-    desc 'attempt DIRECTORY', 'Create a new kata attempt in the specified directory with a subdirectory named after the current user'
+    desc 'attempt DIRECTORY', 'Create a new kata attempt in your own directory'
     def attempt(kata)
-      username = `whoami`.strip.downcase
-      target_directory = File.join(Dir.pwd, 'katas', kata, username)
+      configuration = CleoKatas::Configuration.new
+      target_directory = File.join(Dir.pwd, 'katas', kata, configuration.username)
 
       empty_directory(target_directory)
 
