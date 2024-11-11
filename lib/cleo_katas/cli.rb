@@ -33,6 +33,7 @@ module CleoKatas
       copy_file(kata_file.path, readme_target_file)
       append_file(readme_target_file, <<~MARKDOWN)
 
+
         ---#{' '}
 
         ## How to run your main file#{' '}
