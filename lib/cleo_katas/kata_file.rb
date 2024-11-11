@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module CleoKatas
+  # Represents a Kata README file in the katas directory
   class KataFile
     KATAS_DIR = 'katas'
     KATA_FILE_NAME_REGEX = %r{#{KATAS_DIR}/(?<kata_number>[0-9]*)-(?<kata_name>.*)\.md}

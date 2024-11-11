@@ -19,6 +19,7 @@ module CleoKatas
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     desc 'attempt DIRECTORY', 'Create a new kata attempt in your own directory'
     def attempt(kata)
       self.kata = kata
@@ -45,6 +46,7 @@ module CleoKatas
 
       say "Created new kata attempt directory at #{target_directory} with a main.rb file"
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
