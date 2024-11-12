@@ -5,37 +5,80 @@ gemfile do
   source 'https://rubygems.org'
   gem 'matrix'
   gem 'concurrent-ruby'
-  gem 'singleton'
 end
 
+require 'optparse'
+require 'forwardable'
+class Generation
+  attr_reader :populations
+  def initialize(*populations)
+    @populations = populations
+  end
 
+  def total_population_count
+    populations.sum(&:count)
+  end
+  def randomly_select_competitor!
+    total_population_count = populations.sum(&:count)
+    random_creature_index = rand(total_population_count) + 1
+    offset = 0
+    selected_population = populations.find do |population|
+      break population if (offset..offset + population.count).include?(random_creature_index)
+
+      offset += population.count
+      nil
+    end
+    selected_population.randomly_select_competitor!
+  end
+end
 class Simulation
-  include Singleton
   attr_accessor :total_generations
   attr_accessor :initial_rocks
   attr_accessor :initial_paper
   attr_accessor :initial_scissors
+  attr_accessor :next_generation
+  attr_accessor :current_generation
+  def initialize(total_generations:, initial_rocks: , initial_paper: , initial_scissors: )
+    @total_generations = total_generations
+    @current_generation = Generation.new(
+      Population.new(species: Rock, count: initial_rocks),
+      Population.new(species: Paper, count: initial_paper),
+      Population.new(species: Scissor, count: initial_scissors)
+    )
+  end
 
+  def run!  # rubocop:disable Metrics/AbcSize
+    total_generations.times do |generation_number|
+      evolve!
+      print_stats
+      self.current_generation = self.next_generation
+    end
+  end
+
+  def evolve!
+    self.next_generation = Generation.new(
+      Population.new(species: Rock),
+      Population.new(species: Paper),
+      Population.new(species: Scissor)
+    )
+    until current_generation.total_population_count < 2
+      competitor_a = current_generation.randomly_select_competitor!
+      competitor_b = current_generation.randomly_select_competitor!
+
+      competition = Competition.new(competitor_a, competitor_b)
+      competition.impact_on_populations.each do |species_class, delta|
+        population = next_generation.populations.find { _1.species == species_class }
+        population.counter.increment(delta)
+      end
+    end
+  end
+
+  def print_stats
+    next_generation.populations.each do |population|
+      puts "#{population.species.name}: #{population.count}"
+    end
+  end
 end
-
-require 'optparse'
-OptionParser.new do |opts|
-  opts.banner = 'Usage: ruby main.rb [options]'
-
-  opts.on('-gGENERATIONS', '--generations=GENERATIONS', Integer, 'Number of generations') do |generations|
-    Simulation.instance.total_generations = generations
-  end
-
-  opts.on('--rROCK', '--rock=ROCK', Integer, 'Initial number of rocks') do |rocks|
-    Simulation.instance.initial_rocks = rocks
-  end
-  opts.on('--pPAPER', '--paper=PAPER', Integer, 'Initial number of paper') do |paper|
-    Simulation.instance.initial_paper = paper
-  end
-  opts.on('--sSCISSOR', '--scissor=SCISSOR', Integer, 'Initial number of scissors') do |scissors|
-    Simulation.instance.initial_scissors = scissors
-  end
-end.parse!
 
 class Competition
   MOVES = %w[Rock Paper Scissor].freeze
@@ -53,115 +96,83 @@ class Competition
     @competitor_b = competitor_b
   end
 
-  def outcome
-    index1 = MOVES.index competitor_a.class_name
-    index2 = MOVES.index competitor_b.class_name
-    OUTCOMES[index1, index2]
-  end
-
-  def run!
+  def impact_on_populations
     case outcome
 
-    when :b then competitor_a.reproduce!
-    when :a then competitor_b.reproduce!
-    when :draw
-      competitor_a.partial_reproduce!
-      competitor_b.partial_reproduce!
-    end
-    competitor_a.die!
-    competitor_b.die!
-  end
-end
-
-module Competitor
-  def class_name
-    self.class.name
-  end
-
-end
-
-class Competition
-  attr_reader :competitor_a, :competitor_b
-  def initialize(competitor_a, competitor_b)
-    @competitor_a = competitor_a
-    @competitor_b = competitor_b
-  end
-
-end
-
-module Populatable
-  def self.included(base)
-    base.extend(ClassMethods)
-  end
-
-  module ClassMethods
-    def population_counter
-      @population_counter ||= PopulationCounter.new
+    when :a then  {
+      competitor_a.class => 2,
+      competitor_b.class => 0
+    }
+    when :b then {
+    competitor_a.class => 0,
+    competitor_b.class => 2
+    }
+    when :draw then {
+      competitor_a.class => 2,
+    }
+    else
+      raise "Unknown outcome: #{outcome}"
     end
   end
 
-  def increment_population(count = 1)
-    self.class.population_counter.increment(count)
-  end
+  private
 
-  def decrement_population(count = 1)
-    self.class.population_counter.decrement(count)
-  end
-  alias die! decrement_population
-  alias partial_reproduce! increment_population
 
-  def reproduce!
-    self.class.population_counter.increment(2)
+  def outcome
+    index1 = MOVES.index competitor_a.class.name
+    index2 = MOVES.index competitor_b.class.name
+    OUTCOMES[index1, index2]
   end
 end
 
-class Rock
-  include Competitor
-  include Populatable
+class Creature
 end
 
-class Paper
-  include Competitor
-  include Populatable
+class Rock <  Creature
 end
 
-class Scissor
-  include Competitor
-  include Populatable
+class Paper < Creature
 end
 
-class PopulationCounter
-  require 'concurrent-ruby'
-  require 'forwardable'
+class Scissor < Creature
+end
+
+class Population
 
   extend Forwardable
 
-  attr_reader :value
-
-  def_delegators :value, :increment, :decrement
-  def_delegator :value, :value, :count
-
-  def initialize(initial_value = 0)
-    @value = Concurrent::AtomicFixnum.new(initial_value)
+  attr_reader :species, :counter
+  def_delegator :counter, :value, :count
+  def initialize(species:, count: 0)
+    @species = species
+    @counter = Concurrent::AtomicFixnum.new(count)
   end
+
+  def randomly_select_competitor!
+    counter.decrement
+    species.new
+  end
+
 end
 
-class Generation
-  def run
-    total_population = Rock.population_counter.count.times.map { Rock.new} + Paper.population_counter.count.times.map { Paper.new} + Scissor.population_counter.count.times.map { Scissor.new}
-    until total_population.size < 2
-      random_pair = total_population.sample(2)
-      total_population.delete(random_pair.first)
-      total_population.delete(random_pair.last)
-      Competition.new(random_pair.first, random_pair.last).run!
-    end
-  end
-end
-Rock.population_counter.increment(100)
-Paper.population_counter.increment(100)
-Scissor.population_counter.increment(100)
+options = {}
 
-Simulation.instance.total_generations.times { Generation.new.run }
-puts "Rocks: #{Rock.population_counter.count}"
-puts "Papers: #{Paper.population_counter.count}"
-puts "Scissors: #{Scissor.population_counter.count}"
+OptionParser.new do |opts|
+  opts.banner = 'Usage: ruby main.rb [options]'
+
+  opts.on('-gGENERATIONS', '--generations=GENERATIONS', Integer, 'Number of generations') do |generations|
+    options[:total_generations] = generations
+  end
+
+  opts.on('--rROCK', '--rock=ROCK', Integer, 'Initial number of rocks') do |rocks|
+    options[:initial_rocks] = rocks
+
+  end
+  opts.on('--pPAPER', '--paper=PAPER', Integer, 'Initial number of paper') do |paper|
+    options[:initial_paper] = paper
+  end
+  opts.on('--sSCISSOR', '--scissor=SCISSOR', Integer, 'Initial number of scissors') do |scissors|
+    options[:initial_scissors] = scissors
+  end
+end.parse!
+Simulation.new(**options).run!
