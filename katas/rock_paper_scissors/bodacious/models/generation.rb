@@ -8,7 +8,6 @@ class Generation
     populations.sum(&:count)
   end
   def randomly_select_competitor!
-    total_population_count = populations.sum(&:count)
     random_creature_index = rand(total_population_count) + 1
     offset = 0
     selected_population = populations.find do |population|

@@ -21,9 +21,9 @@ class Simulation
   def run!  # rubocop:disable Metrics/AbcSize
     total_generations.times do |generation_number|
       evolve!
-      print_stats
       self.current_generation = self.next_generation
     end
+    print_stats
   end
 
   def evolve!
@@ -36,7 +36,7 @@ class Simulation
       competitor_a = current_generation.randomly_select_competitor!
       competitor_b = current_generation.randomly_select_competitor!
 
-      competition = Competition.new(competitor_a.class.name, competitor_b.class.name)
+      competition = Competition.new(competitor_a, competitor_b)
       competition.impact_on_populations.each do |species_class, delta|
         population = next_generation.populations.find { _1.species == species_class }
         population.counter.increment(delta)
@@ -46,7 +46,7 @@ class Simulation
 
   def print_stats
     next_generation.populations.each do |population|
-      puts "#{population.species.name}: #{population.count}"
+      puts "#{population.species}: #{population.count}"
     end
   end
 end
