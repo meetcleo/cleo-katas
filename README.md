@@ -2,7 +2,7 @@
 
 This repo stores the katas that we work on as part of Cleo's internal Kata club.
 
-[![Ruby Lint](https://github.com/meetcleo/cleo-katas/actions/workflows/ruby-lint.yml/badge.svg)](https://github.com/meetcleo/cleo-katas/actions/workflows/ruby-lint.yml)
+[![Ruby Lint](https://github.com/meetcleo/cleo-katas/actions/workflows/ruby-lint.yml/badge.svg?branch=main)](https://github.com/meetcleo/cleo-katas/actions/workflows/ruby-lint.yml) 
 
 ## Installing 
 
