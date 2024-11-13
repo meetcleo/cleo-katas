@@ -37,8 +37,8 @@ class Simulation
       competitor_b = current_generation.randomly_select_competitor!
 
       competition = Competition.new(competitor_a, competitor_b)
-      competition.impact_on_populations.each do |species_class, delta|
-        population = next_generation.populations.find { _1.species == species_class }
+      competition.impact_on_populations.each do |species_name, delta|
+        population = next_generation.populations.find { |population| population.species == species_name }
         population.counter.increment(delta)
       end
     end
