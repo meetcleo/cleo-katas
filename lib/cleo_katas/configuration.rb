@@ -5,8 +5,15 @@ require 'delegate'
 module CleoKatas
   # Stores configured preferences for this user
   class Configuration < DelegateClass(Hash)
+    CONFIG_FILE_PATH = '.cleo-katas.yml'
+
     def initialize
-      super(YAML.load_file('.cleo-katas.yml'))
+      if File.file?(CONFIG_FILE_PATH)
+        super(YAML.load_file(CONFIG_FILE_PATH))
+      else
+        # Blank config
+        super(Hash.new(''))
+      end
     end
 
     # The preferred username for this User. Will fall back to their git config username or their
