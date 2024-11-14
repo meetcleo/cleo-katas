@@ -12,9 +12,9 @@ class Simulation
   def initialize(total_generations:, initial_rocks: , initial_paper: , initial_scissors: )
     @total_generations = total_generations
     @current_generation = Generation.new(
-      Population.new(species: "Rock", count: initial_rocks),
-      Population.new(species: "Paper", count: initial_paper),
-      Population.new(species: "Scissor", count: initial_scissors)
+      Population.new(species: :rock, count: initial_rocks),
+      Population.new(species: :paper, count: initial_paper),
+      Population.new(species: :scissor, count: initial_scissors)
     )
   end
 
@@ -28,9 +28,9 @@ class Simulation
 
   def evolve!
     self.next_generation = Generation.new(
-      Population.new(species: "Rock"),
-      Population.new(species: "Paper"),
-      Population.new(species: "Scissor")
+      Population.new(species: :rock),
+      Population.new(species: :paper),
+      Population.new(species: :scissor)
     )
     until current_generation.total_population_count < 2
       competitor_a = current_generation.randomly_select_competitor!

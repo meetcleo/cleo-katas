@@ -12,7 +12,12 @@ require 'optparse'
 require_relative 'models/competition'
 require_relative 'models/simulation'
 
-options = {}
+options = {
+  total_generations: 50,
+  initial_rocks: 100,
+  initial_paper: 100,
+  initial_scissors: 100,
+}
 
 OptionParser.new do |opts|
   opts.banner = 'Usage: ruby main.rb [options]'
