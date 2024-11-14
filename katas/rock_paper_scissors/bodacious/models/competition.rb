@@ -1,7 +1,24 @@
 class Competition
   class Outcome
 
-    MOVES = %w[ Scissor Paper Rock].freeze
+    # MOVES = %w[ Scissor Paper Rock].freeze
+    OUTCOMES_HASH = {
+      rock: {
+        rock: :rock,
+        paper: :paper,
+        scissor: :rock
+      },
+      paper: {
+        rock: :paper,
+        paper: :paper,
+        scissor: :scissor
+      },
+      scissor: {
+        rock: :rock,
+        paper: :scissor,
+        scissor: :scissor
+      }
+    }
 
     attr_reader :competitor_a, :competitor_b
 
@@ -15,12 +32,7 @@ class Competition
     #
     # @return [String]
     def winner
-      index_a = MOVES.index(competitor_a)
-      if MOVES[index_a - 1] == competitor_b
-        competitor_b
-      else
-        competitor_a
-      end
+      OUTCOMES_HASH[competitor_a][competitor_b]
     end
   end
 
