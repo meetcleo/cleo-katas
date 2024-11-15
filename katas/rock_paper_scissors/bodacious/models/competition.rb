@@ -1,5 +1,4 @@
 class Competition
-  class Outcome
 
     # MOVES = %w[ Scissor Paper Rock].freeze
     OUTCOMES_HASH = {
@@ -20,21 +19,6 @@ class Competition
       }
     }
 
-    attr_reader :competitor_a, :competitor_b
-
-    def initialize(competitor_a, competitor_b)
-      @competitor_a = competitor_a
-      @competitor_b = competitor_b
-    end
-
-    # The winner of the competition. Rock beats Scissors, Scissors beats Paper, Paper beats Rock. Will return
-    # the name of the draw if the competitors are equal.
-    #
-    # @return [String]
-    def winner
-      OUTCOMES_HASH[competitor_a][competitor_b]
-    end
-  end
 
   attr_reader :competitor_a, :competitor_b
 
@@ -53,6 +37,6 @@ class Competition
   private
 
   def outcome
-    Outcome.new(competitor_a, competitor_b).winner
+    OUTCOMES_HASH[competitor_a][competitor_b]
   end
 end
