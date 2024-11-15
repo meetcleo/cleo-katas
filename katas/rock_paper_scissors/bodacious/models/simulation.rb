@@ -18,7 +18,7 @@ class Simulation
     )
   end
 
-  def run!  # rubocop:disable Metrics/AbcSize
+  def run!
     total_generations.times do |generation_number|
       evolve!
       self.current_generation = self.next_generation
