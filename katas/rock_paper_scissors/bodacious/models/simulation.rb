@@ -32,14 +32,15 @@ class Simulation
       Population.new(species: :paper),
       Population.new(species: :scissor)
     )
+
     until current_generation.total_population_count < 2
       competitor_a = current_generation.randomly_select_competitor!
       competitor_b = current_generation.randomly_select_competitor!
 
       competition = Competition.new(competitor_a, competitor_b)
       competition.impact_on_populations.each do |species_name, delta|
-        population = next_generation.populations.find { |population| population.species == species_name }
-        population.counter.increment(delta)
+        population = next_generation.find_population(species_name)
+        population.count += delta
       end
     end
   end

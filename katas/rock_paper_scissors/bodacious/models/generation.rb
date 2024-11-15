@@ -7,6 +7,11 @@ class Generation
   def total_population_count
     populations.sum(&:count)
   end
+
+  def find_population(species_name)
+    @cached_populations ||= {}
+    @cached_populations[species_name] ||= populations.find { |population| population.species == species_name }
+  end
   def randomly_select_competitor!
     random_creature_index = rand(total_population_count) + 1
     offset = 0

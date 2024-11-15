@@ -4,15 +4,16 @@ class Population
   require 'forwardable'
   extend Forwardable
 
-  attr_reader :species, :counter
-  def_delegator :counter, :value, :count
+  attr_reader :species, :count
+  attr_writer :count
+
   def initialize(species:, count: 0)
     @species = species
-    @counter = Concurrent::AtomicFixnum.new(count)
+    @count = count
   end
 
   def randomly_select_competitor!
-    counter.decrement
+    self.count -= 1
     species
   end
 
