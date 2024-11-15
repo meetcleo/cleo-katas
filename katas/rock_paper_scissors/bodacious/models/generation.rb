@@ -12,6 +12,13 @@ class Generation
     @cached_populations ||= {}
     @cached_populations[species_name] ||= populations.find { |population| population.species == species_name }
   end
+
+  def update_populations!(**changes)
+    changes.each do |species_name, delta|
+      find_population(species_name).count += delta
+    end
+  end
+
   def randomly_select_competitor!
     random_creature_index = rand(total_population_count) + 1
     offset = 0
