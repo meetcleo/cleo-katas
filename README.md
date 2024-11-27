@@ -13,20 +13,20 @@ git clone git@github.com:Bodacious/cleo-katas.git
 ## Listing the available katas 
 
 ```bash
-bin/cleo-katas list 
+bin/cleo_katas list 
 ```
 
 
 ## Start working on a kata
 
 ```bash
-bin/cleo-katas attempt [kata-name]
+bin/cleo_katas attempt [kata-name]
 ```
 
 So, to begin working on the rock_paper_scissors kata, you would type 
 
 ```bash
-bin/cleo-katas attempt rock_paper_scissors
+bin/cleo_katas attempt rock_paper_scissors
 ```
 
 This will create a new directory within this repository for you to work within.

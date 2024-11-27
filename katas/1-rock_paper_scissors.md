@@ -14,20 +14,21 @@ Create an evolutionary simulation  to model a hypothetical world of Rock, Paper,
 
 ### Input Specifications
 
-Your solution should allow you to easily specify the initial population size, as well as the number of  days (generations) to simulate.
+Your solution should allow you to easily specify the initial population sizes (for rock, paper, and scissors), as well as the number of  days (generations) to simulate.
 
 ### Output Specifications
 
 Your solution should display the population composition at the end of the simulation.
 
-
 ### Constraints
 
-Implement your solution so that it can perform well with very large populations? Can you simulate 1,000,000 generations?
+Implement your solution so that it can perform well with very large populations. 
+
+Can you simulate 1,000,000 generations without your laptop melting?
 
 ## Examples and Test Cases
 
-If you run your solution with only 2 Rock and 2 Paper creatures (0 Scissors), you should have only Papers by the end of about 10 generations.
+n/a 
 
 ### Sample Inputs and Outputs
 
@@ -76,3 +77,5 @@ Imagine a world inhabited by Rock, Paper, and Scissors creatures. Model the worl
 - Your can be configured to start with any initial population size, and any number of days (generations)
 - Your model accurately simulates change in populations over time
 - Your model prints the final population composition
+- If you run your model with only 2 Rock and 2 Paper creatures (0 Scissors), you should have only Papers by the end of about 10 generations.
+- If you run your simulation with an odd number of creatures, it should still work.
