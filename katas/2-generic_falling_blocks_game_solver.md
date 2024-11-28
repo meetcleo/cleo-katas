@@ -67,6 +67,8 @@ Blocks may also have one or more orientations. Each orientation represents the s
 
 Unlike other popular, hypothetical falling block games, in our game players may choose which shape to play on each turn.
 
+**To win the number 1 place on the leaderboard, you have to write a program that will choose the optimal shape on each turn**
+
 ## Requirements and Constraints
 
 ### Input / Output Specifications
