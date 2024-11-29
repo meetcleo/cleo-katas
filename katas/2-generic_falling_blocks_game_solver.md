@@ -122,6 +122,22 @@ class GenericFallingBlocksGameTest < Minitest::Test
     assert_equal :any, instance.recommended_orientation
   end
 
+  def test_correctly_recommends_square_block_deep
+    skip 'Not implemented'
+
+    game_plane = <<~PLANE
+
+
+      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
+      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
+      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
+      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+    PLANE
+    instance = described_class.new(game_plane)
+    assert_equal 'Square', instance.recommended_block
+    assert_equal :any, instance.recommended_orientation
+  end
+
   def test_correctly_recommends_line_block_orientation_1
     skip 'Not implemented'
 
@@ -184,22 +200,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
     instance = described_class.new(game_plane)
     assert_equal 'Z', instance.recommended_block
     assert_equal :orientation_2, instance.recommended_orientation
-  end
-
-  def test_correctly_recommends_l_orientation_1
-    skip 'Not implemented'
-
-    game_plane = <<~PLANE
-
-
-      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
-      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
-      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
-      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-    PLANE
-    instance = described_class.new(game_plane)
-    assert_equal 'L', instance.recommended_block
-    assert_equal :orientation_1, instance.recommended_orientation
   end
 
   def test_correctly_recommends_l_orientation_2
