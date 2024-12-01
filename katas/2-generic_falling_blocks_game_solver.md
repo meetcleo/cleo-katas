@@ -93,8 +93,8 @@ class GenericFallingBlocksGameTest < Minitest::Test
     skip 'Not implemented'
 
     game_plane = <<~PLANE
-
-
+      
+      
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -105,13 +105,11 @@ class GenericFallingBlocksGameTest < Minitest::Test
   end
 
   def test_correctly_recommends_square_block_any_orientation
-    skip 'Not implemented'
-
     game_plane = <<~PLANE
-
-
-      ▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓▓
+      
+      
+      ▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
     PLANE
@@ -126,10 +124,10 @@ class GenericFallingBlocksGameTest < Minitest::Test
     game_plane = <<~PLANE
 
 
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
     PLANE
     instance = described_class.new(game_plane)
     assert_equal 'Line', instance.recommended_block
