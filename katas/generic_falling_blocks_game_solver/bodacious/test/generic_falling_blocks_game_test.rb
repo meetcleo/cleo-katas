@@ -2,7 +2,6 @@
 
 require 'minitest/autorun'
 
-
 class GenericFallingBlocksGameTest < Minitest::Test
   def test_recommends_any_block_when_plane_is_level
     skip 'Not implemented'
@@ -23,10 +22,10 @@ class GenericFallingBlocksGameTest < Minitest::Test
     skip 'Not implemented'
 
     game_plane = <<~PLANE
+      
 
-
-      ▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
     PLANE
@@ -41,10 +40,10 @@ class GenericFallingBlocksGameTest < Minitest::Test
     game_plane = <<~PLANE
 
 
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
     PLANE
     instance = described_class.new(game_plane)
     assert_equal 'Line', instance.recommended_block
@@ -166,6 +165,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
   private
 
   def described_class
-    # TODO: Define me!
+    GridSolver
   end
 end

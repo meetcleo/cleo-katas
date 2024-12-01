@@ -67,6 +67,8 @@ Blocks may also have one or more orientations. Each orientation represents the s
 
 Unlike other popular, hypothetical falling block games, in our game players may choose which shape to play on each turn.
 
+**To win the number 1 place on the leaderboard, you have to write a program that will choose the optimal shape on each turn**
+
 ## Requirements and Constraints
 
 ### Input / Output Specifications
@@ -93,8 +95,8 @@ class GenericFallingBlocksGameTest < Minitest::Test
     skip 'Not implemented'
 
     game_plane = <<~PLANE
-
-
+      
+      
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -105,14 +107,28 @@ class GenericFallingBlocksGameTest < Minitest::Test
   end
 
   def test_correctly_recommends_square_block_any_orientation
+    game_plane = <<~PLANE
+      
+      
+      ▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+    PLANE
+    instance = described_class.new(game_plane)
+    assert_equal 'Square', instance.recommended_block
+    assert_equal :any, instance.recommended_orientation
+  end
+
+  def test_correctly_recommends_square_block_deep
     skip 'Not implemented'
 
     game_plane = <<~PLANE
 
 
-      ▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
+      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
+      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
     PLANE
     instance = described_class.new(game_plane)
@@ -126,10 +142,10 @@ class GenericFallingBlocksGameTest < Minitest::Test
     game_plane = <<~PLANE
 
 
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-      ▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+      ▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
     PLANE
     instance = described_class.new(game_plane)
     assert_equal 'Line', instance.recommended_block
@@ -182,22 +198,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
     instance = described_class.new(game_plane)
     assert_equal 'Z', instance.recommended_block
     assert_equal :orientation_2, instance.recommended_orientation
-  end
-
-  def test_correctly_recommends_l_orientation_1
-    skip 'Not implemented'
-
-    game_plane = <<~PLANE
-
-
-      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
-      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
-      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓
-      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-    PLANE
-    instance = described_class.new(game_plane)
-    assert_equal 'L', instance.recommended_block
-    assert_equal :orientation_1, instance.recommended_orientation
   end
 
   def test_correctly_recommends_l_orientation_2
