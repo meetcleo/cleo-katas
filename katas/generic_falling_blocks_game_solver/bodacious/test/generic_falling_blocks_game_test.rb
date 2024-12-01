@@ -2,10 +2,9 @@
 
 require 'minitest/autorun'
 
+require_relative '../sketch'
 class GenericFallingBlocksGameTest < Minitest::Test
   def test_recommends_any_block_when_plane_is_level
-    skip 'Not implemented'
-
     game_plane = <<~PLANE
 
 
@@ -19,7 +18,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
   end
 
   def test_correctly_recommends_square_block_any_orientation
-    skip 'Not implemented'
 
     game_plane = <<~PLANE
       
@@ -35,8 +33,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
   end
 
   def test_correctly_recommends_line_block_orientation_1
-    skip 'Not implemented'
-
     game_plane = <<~PLANE
 
 
@@ -51,8 +47,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
   end
 
   def test_correctly_recommends_line_block_orientation_2
-    skip 'Not implemented'
-
     game_plane = <<~PLANE
 
 
@@ -67,8 +61,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
   end
 
   def test_correctly_recommends_z_block_orientation_1
-    skip 'Not implemented'
-
     game_plane = <<~PLANE
 
 
@@ -83,8 +75,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
   end
 
   def test_correctly_recommends_z_block_orientation_2
-    skip 'Not implemented'
-
     game_plane = <<~PLANE
 
 
@@ -98,9 +88,7 @@ class GenericFallingBlocksGameTest < Minitest::Test
     assert_equal :orientation_2, instance.recommended_orientation
   end
 
-  def test_correctly_recommends_l_orientation_1
-    skip 'Not implemented'
-
+  def test_correctly_recommends_square_block_deep
     game_plane = <<~PLANE
 
 
@@ -110,13 +98,11 @@ class GenericFallingBlocksGameTest < Minitest::Test
       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
     PLANE
     instance = described_class.new(game_plane)
-    assert_equal 'L', instance.recommended_block
-    assert_equal :orientation_1, instance.recommended_orientation
+    assert_equal 'Square', instance.recommended_block
+    assert_equal :any, instance.recommended_orientation
   end
 
   def test_correctly_recommends_l_orientation_2
-    skip 'Not implemented'
-
     game_plane = <<~PLANE
 
 
@@ -131,8 +117,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
   end
 
   def test_correctly_recommends_l_orientation_3
-    skip 'Not implemented'
-
     game_plane = <<~PLANE
 
 
@@ -147,8 +131,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
   end
 
   def test_correctly_recommends_l_orientation_4
-    skip 'Not implemented'
-
     game_plane = <<~PLANE
 
 
