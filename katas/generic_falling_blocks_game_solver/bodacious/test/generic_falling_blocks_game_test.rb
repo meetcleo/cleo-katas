@@ -2,7 +2,7 @@
 
 require 'minitest/autorun'
 
-require_relative '../sketch'
+require_relative '../main'
 class GenericFallingBlocksGameTest < Minitest::Test
   def test_recommends_any_block_when_plane_is_level
     game_plane = <<~PLANE
