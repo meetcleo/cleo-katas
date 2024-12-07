@@ -26,7 +26,7 @@ bin/cleo_katas attempt [kata-name]
 So, to begin working on the rock_paper_scissors kata, you would type 
 
 ```bash
-bin/cleo_katas attempt rock_paper_scissors
+bin/cleo_katas attempt 1-rock_paper_scissors
 ```
 
 This will create a new directory within this repository for you to work within.
