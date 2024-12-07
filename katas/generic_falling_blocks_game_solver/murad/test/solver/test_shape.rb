@@ -4,10 +4,10 @@ require_relative '../../solver/shape'
 
 class TestShape < Minitest::Test
   def test_shape
-    Shape::AVAILABLE_SHAPES.each do |shape|
-      (1..4).each do |n|
-        puts "ORIENTATION: #{n}"
-        puts shape.orientation(n)
+    AvailableShapes.call.each do |shape|
+      (1..shape.number_of_orientations).each do |n|
+        puts "SHAPE: #{shape.name}, ORIENTATION: #{n}"
+        puts shape.new(orientation: n).to_s
       end
     end
   end

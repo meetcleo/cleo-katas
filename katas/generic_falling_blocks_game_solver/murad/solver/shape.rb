@@ -3,47 +3,78 @@
 require_relative './plane'
 
 class Shape
-  def self.from_string(shape_string)
-    new(Plane.from_string(shape_string))
-  end
+  def self.canonical_shape = raise NotImplementedError
+  def self.number_of_orientations = raise NotImplementedError
+  def self.name = raise NotImplementedError
 
-  def initialize(plane)
-    @plane = plane
-  end
+  def plane = Plane.from_string(self.class.canonical_shape).rotate(orientation - 1)
 
-  def orientation(n)
-    plane.rotate(n - 1)
+  def initialize(orientation:)
+    @orientation = orientation
   end
 
   def to_s = plane.to_s
 
-  AVAILABLE_SHAPES = [
-    SQUARE = from_string(<<~SHAPE
+  private
+
+  attr_reader :orientation
+end
+
+class AvailableShapes
+  def self.call = Shape.subclasses
+end
+
+class Square < Shape
+  def self.canonical_shape
+    <<~SHAPE
       ▓▓▓▓
       ▓▓▓▓
     SHAPE
-    ),
-    LINE = from_string(<<~SHAPE
+  end
+
+  def self.number_of_orientations = 1
+
+  def self.name = 'Square'
+end
+
+class Line < Shape
+  def self.canonical_shape
+    <<~SHAPE
       ▓▓
       ▓▓
       ▓▓
       ▓▓
     SHAPE
-    ),
-    Z = from_string(<<~SHAPE
+  end
+
+  def self.number_of_orientations = 2
+
+  def self.name = 'Line'
+end
+
+class Z < Shape
+  def self.canonical_shape
+    <<~SHAPE
       ▓▓▓▓
         ▓▓▓▓
     SHAPE
-    ),
-    L = from_string(<<~SHAPE
+  end
+
+  def self.number_of_orientations = 2
+
+  def self.name = 'Z'
+end
+
+class L < Shape
+  def self.canonical_shape
+    <<~SHAPE
       ▓▓
       ▓▓
       ▓▓▓▓
-SHAPE
-    ),
-  ]
+    SHAPE
+  end
 
-  private
+  def self.number_of_orientations = 4
 
-  attr_reader :plane
+  def self.name = 'L'
 end
