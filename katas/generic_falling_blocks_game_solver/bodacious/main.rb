@@ -42,16 +42,41 @@ class GameGrid < DelegateClass(Matrix)
 end
 
 class Opportunity
-  attr_reader :block_shape, :orientation, :pattern
+  extend Forwardable
+  attr_reader :shape, :orientation, :pattern
 
-  def initialize(block_shape:, orientation:, pattern:)
-    @block_shape = block_shape
+  def initialize(shape:, orientation:, pattern:)
+    @shape = shape
     @orientation = orientation
     @pattern = pattern
   end
+  def_delegator :shape, :long_name, :shape_long_name
+  def_delegator :orientation, :long_name, :orientation_long_name
+end
 
-  def block_name
-    block_shape.to_s.capitalize
+class BlockShape
+  attr_reader :short_name
+
+  def initialize(short_name = :any)
+    @short_name = short_name
+  end
+
+  def long_name
+    short_name.to_s.capitalize
+  end
+end
+
+class BlockOrientation
+  attr_reader :number
+
+  def initialize(number = 0)
+    @number = number
+  end
+
+  def long_name
+    return :any if number.zero?
+
+    :"orientation_#{number}"
   end
 end
 
@@ -98,29 +123,49 @@ class GridSolver
     [0, 0, 0],
   ]
 
+  # rubocop:disable Metrics/MethodLength
   def initialize(game_plane)
     game_grid = GameGrid.new(game_plane)
     opportunities = [
-      Opportunity.new(block_shape: :z, orientation: :orientation_1, pattern: Z_BLOCK_ORIENTATION_1_MATRIX),
-      Opportunity.new(block_shape: :line, orientation: :orientation_2, pattern: LINE_BLOCK_ORIENTATION_2_MATRIX),
-      Opportunity.new(block_shape: :l, orientation: :orientation_2, pattern: L_BLOCK_ORIENTATION_1_MATRIX),
-      Opportunity.new(block_shape: :l, orientation: :orientation_3, pattern: L_BLOCK_ORIENTATION_2_MATRIX),
-      Opportunity.new(block_shape: :l, orientation: :orientation_4, pattern: L_BLOCK_ORIENTATION_3_MATRIX),
-      Opportunity.new(block_shape: :z, orientation: :orientation_2, pattern: Z_BLOCK_ORIENTATION_2_MATRIX),
-      Opportunity.new(block_shape: :square, orientation: :any, pattern: SQUARE_BLOCK_MATRIX),
-      Opportunity.new(block_shape: :line, orientation: :orientation_1, pattern: LINE_BLOCK_ORIENTATION_1_MATRIX),
-      Opportunity.new(block_shape: :any, orientation: :any, pattern: Matrix[]) # null matcher
+      Opportunity.new(shape: BlockShape.new(:z),
+                      orientation: BlockOrientation.new(1),
+                      pattern: Z_BLOCK_ORIENTATION_1_MATRIX),
+      Opportunity.new(shape: BlockShape.new(:line),
+                      orientation: BlockOrientation.new(2),
+                      pattern: LINE_BLOCK_ORIENTATION_2_MATRIX),
+      Opportunity.new(shape: BlockShape.new(:l),
+                      orientation: BlockOrientation.new(2),
+                      pattern: L_BLOCK_ORIENTATION_1_MATRIX),
+      Opportunity.new(shape: BlockShape.new(:l),
+                      orientation: BlockOrientation.new(3),
+                      pattern: L_BLOCK_ORIENTATION_2_MATRIX),
+      Opportunity.new(shape: BlockShape.new(:l),
+                      orientation: BlockOrientation.new(4),
+                      pattern: L_BLOCK_ORIENTATION_3_MATRIX),
+      Opportunity.new(shape: BlockShape.new(:z),
+                      orientation: BlockOrientation.new(2),
+                      pattern: Z_BLOCK_ORIENTATION_2_MATRIX),
+      Opportunity.new(shape: BlockShape.new(:square),
+                      orientation: BlockOrientation.new,
+                      pattern: SQUARE_BLOCK_MATRIX),
+      Opportunity.new(shape: BlockShape.new(:line),
+                      orientation: BlockOrientation.new(1),
+                      pattern: LINE_BLOCK_ORIENTATION_1_MATRIX),
+      Opportunity.new(shape: BlockShape.new,
+                      orientation: BlockOrientation.new,
+                      pattern: Matrix[]) # null matcher
     ]
     @best_opportunity = opportunities.detect do |opportunity|
       game_grid.include_submatrix?(opportunity.pattern)
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def recommended_block
-    best_opportunity.block_name
+    best_opportunity.shape_long_name
   end
 
   def recommended_orientation
-    best_opportunity.orientation
+    best_opportunity.orientation_long_name
   end
 end
