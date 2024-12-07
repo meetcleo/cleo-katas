@@ -7,17 +7,26 @@ class Shape
   def self.number_of_orientations = raise NotImplementedError
   def self.name = raise NotImplementedError
 
-  def plane = Plane.from_string(self.class.canonical_shape).rotate(orientation - 1)
-
   def initialize(orientation:)
     @orientation = orientation
   end
 
+  attr_reader :orientation
+
+  def height = plane.row_size
+  def width = plane.col_size
+  def at(row, col) = plane.at(row, col)
+
   def to_s = plane.to_s
 
-  private
+  def each_with_index
+    plane.each_with_index do |elem, row, col|
+      yield elem, row, col
+    end
+  end
 
-  attr_reader :orientation
+  private
+  def plane = Plane.from_string(self.class.canonical_shape).rotate(orientation - 1)
 end
 
 class AvailableShapes

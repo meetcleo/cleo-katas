@@ -55,6 +55,12 @@ class Plane
   def row_size = matrix.row_size
   def col_size = matrix.column_size
 
+  def each_with_index
+    matrix.each_with_index do |elem, row, col|
+      yield elem, row, col
+    end
+  end
+
   def rotate(n)
     n %= 4
     case n
