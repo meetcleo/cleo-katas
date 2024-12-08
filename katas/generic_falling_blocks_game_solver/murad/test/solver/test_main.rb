@@ -73,8 +73,6 @@ class GenericFallingBlocksGameTest < Minitest::Test
   end
 
   def test_correctly_recommends_z_block_orientation_1
-    skip "both Z and Square blocks fit equally well. I disagree with this assertion."
-
     game_plane = <<~PLANE
 
 

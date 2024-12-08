@@ -4,6 +4,8 @@ require_relative './plane'
 require_relative './shape'
 
 class Solver
+  MultiplePossibleSolutionsError = Class.new(StandardError)
+
   def initialize(game_plane)
     @plane = Plane.from_string(game_plane)
     return recommend_any if plane.level?
@@ -11,7 +13,17 @@ class Solver
     @recommendations = []
     solve!
     find_lowest_row_recommendations!
-    raise "More than one recommendation left. Not handled at the moment." if recommendations.size > 1
+    if recommendations.size > 1
+      debug_state_msg = <<~MSG
+        Pretty sure all of them are equally viable. See for yourself:
+        PLANE:
+        #{plane}
+        RECOMMENDATIONS:
+        #{recommendations.map(&:to_debug_s).join("\n")}
+      MSG
+      raise MultiplePossibleSolutionsError, debug_state_msg
+
+    end
     @the_recommendation = recommendations.first
   end
 
@@ -43,6 +55,7 @@ class Solver
               col_idx:,
               max_depth: row_idx + shape.height,
               taken_blocks_per_row: shape.taken_blocks_per_row,
+              shape:,
             )
           end
         end
@@ -82,4 +95,6 @@ class Solver
   end
 end
 
-Recommendation = Struct.new(:shape_name, :orientation, :row_idx, :col_idx, :max_depth, :taken_blocks_per_row, keyword_init: true)
+Recommendation = Struct.new(:shape_name, :orientation, :row_idx, :col_idx, :max_depth, :taken_blocks_per_row, :shape, keyword_init: true) do
+  def to_debug_s = to_s + "\n" + shape.to_s
+end
