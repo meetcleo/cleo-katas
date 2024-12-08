@@ -6,6 +6,8 @@ require_relative './shape'
 class Solver
   def initialize(game_plane)
     @plane = Plane.from_string(game_plane)
+    return recommend_any if plane.level?
+
     @recommendations = []
     solve!
     find_lowest_row_recommendations!
@@ -73,6 +75,10 @@ class Solver
       biggest_value = recommendations.map { _1.taken_blocks_per_row[row_idx - 1] }.max
       recommendations.reject! { _1.taken_blocks_per_row[row_idx - 1] != biggest_value }
     end
+  end
+
+  def recommend_any
+    @the_recommendation = Recommendation.new(shape_name: 'Any', orientation: :any)
   end
 end
 

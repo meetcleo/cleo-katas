@@ -75,6 +75,12 @@ class Plane
     end
   end
 
+  def level?
+    matrix.row_vectors.all? do |row_vector|
+      row_vector.to_a.map(&:to_i).uniq.size == 1
+    end
+  end
+
   def to_s
     matrix.row_vectors.map { _1.to_a.join('') }.join("\n")
   end

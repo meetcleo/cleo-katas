@@ -4,8 +4,6 @@ require_relative '../../solver/solver'
 
 class GenericFallingBlocksGameTest < Minitest::Test
   def test_recommends_any_block_when_plane_is_level
-    skip 'Not implemented'
-
     game_plane = <<~PLANE
       
       
