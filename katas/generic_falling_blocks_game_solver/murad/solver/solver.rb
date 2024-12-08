@@ -28,10 +28,10 @@ class Solver
   def solve!
     AvailableShapes.call.each do |shape_class|
       shape_class.number_of_orientations.times do |orientation|
-        shape = shape_class.new(orientation:)
+        shape = shape_class.new(orientation: orientation + 1)
 
-        0.upto(plane.row_size - shape.height - 1) do |row_idx|
-          0.upto(plane.col_size - shape.width - 1) do |col_idx|
+        0.upto(plane.row_size - shape.height) do |row_idx|
+          0.upto(plane.col_size - shape.width) do |col_idx|
             next unless shape_fits_at?(shape, row_idx, col_idx)
 
             recommendations << Recommendation.new(
@@ -56,7 +56,7 @@ class Solver
   def shape_orientation_recommendation(shape)
     return :any if shape.class.number_of_orientations == 1
 
-    "orientation_#{shape.orientation + 1}".to_sym
+    "orientation_#{shape.orientation}".to_sym
   end
 
   def find_lowest_row_recommendations!
