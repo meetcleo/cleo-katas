@@ -67,11 +67,11 @@ class Plane
     when 0
       self.class.new(matrix)
     when 1
-      self.class.new(Matrix.build(col_size, row_size) { |row, col| matrix[col, row] })
+      self.class.new(Matrix.build(col_size, row_size) { |row, col| matrix[row_size - col - 1, row] })
     when 2
       self.class.new(Matrix.build(row_size, col_size) { |row, col| matrix[row_size - row - 1, col_size - col - 1] })
     when 3
-      self.class.new(Matrix.build(col_size, row_size) { |row, col| matrix[row_size - col - 1, col_size - row - 1] })
+      self.class.new(Matrix.build(col_size, row_size) { |row, col| matrix[col, col_size - row - 1] })
     end
   end
 
