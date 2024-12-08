@@ -39,6 +39,8 @@ class Solver
               orientation: shape_orientation_recommendation(shape),
               row_idx:,
               col_idx:,
+              max_depth: row_idx + shape.height,
+              taken_blocks_per_row: shape.taken_blocks_per_row,
             )
           end
         end
@@ -60,9 +62,18 @@ class Solver
   end
 
   def find_lowest_row_recommendations!
-    lowest_row = recommendations.max_by(&:row_idx).row_idx
-    recommendations.reject! { _1.row_idx != lowest_row }
+    lowest_end = recommendations.map(&:max_depth).max
+    recommendations.reject! { _1.max_depth != lowest_end }
+
+    lowest_start = recommendations.map(&:row_idx).max
+    recommendations.reject! { _1.row_idx != lowest_start }
+
+    # taken_blocks_per_row will be of equal sizes here
+    recommendations.first.taken_blocks_per_row.size.downto(1) do |row_idx|
+      biggest_value = recommendations.map { _1.taken_blocks_per_row[row_idx - 1] }.max
+      recommendations.reject! { _1.taken_blocks_per_row[row_idx - 1] != biggest_value }
+    end
   end
 end
 
-Recommendation = Struct.new(:shape_name, :orientation, :row_idx, :col_idx, keyword_init: true)
+Recommendation = Struct.new(:shape_name, :orientation, :row_idx, :col_idx, :max_depth, :taken_blocks_per_row, keyword_init: true)

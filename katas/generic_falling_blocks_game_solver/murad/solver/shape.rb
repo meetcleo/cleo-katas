@@ -25,6 +25,12 @@ class Shape
     end
   end
 
+  def taken_blocks_per_row
+    result = Array.new(plane.row_size, 0)
+    each_with_index { |elem, row, _col| result[row] += elem.to_i }
+    result
+  end
+
   private
   def plane = Plane.from_string(self.class.canonical_shape).rotate(orientation - 1)
 end
