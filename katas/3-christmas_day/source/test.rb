@@ -2,6 +2,11 @@ require_relative 'main'
 require 'minitest/autorun'
 
 class ChristmasDayTest < Minitest::Test
+  def test_returns_the_correct_weekday_for_2025
+    skip 'Not implemented'
+    assert_raises { ChristmasDay.new(2025).weekday }
+  end
+
   def test_returns_the_correct_weekday_for_2024
     skip 'Not implemented'
     assert_equal 'Wednesday', ChristmasDay.new(2024).weekday
