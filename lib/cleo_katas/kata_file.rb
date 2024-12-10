@@ -11,11 +11,14 @@ module CleoKatas
 
     def self.all
       Dir.glob(File.join(Dir.pwd, KATA_FILE_NAME_GLOB)).map do |kata_file|
-        puts kata_file
         match_data = kata_file.match(KATA_FILE_NAME_REGEX)
         new(number: match_data[:kata_number],
             name: match_data[:kata_name])
       end
+    end
+
+    def self.max_number
+      all.map(&:number).max
     end
 
     def self.find(kata_name)
