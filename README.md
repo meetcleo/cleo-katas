@@ -26,7 +26,7 @@ bin/cleo_katas attempt [kata-name]
 So, to begin working on the rock_paper_scissors kata, you would type 
 
 ```bash
-bin/cleo_katas attempt 1-rock_paper_scissors
+bin/cleo_katas attempt rock_paper_scissors
 ```
 
 This will create a new directory within this repository for you to work within.
@@ -37,6 +37,16 @@ Since we're just writing plain Ruby code, outside of the context of a web applic
 
 ```bash
 bundle exec ruby katas/[name-of-kata]/your-username/main.rb
+```
+
+### Running tests 
+
+Usually, katas will come with a set of pre-written tests which must pass in order to satisfy the kata requirements. 
+
+You can run these tests by calling
+
+```
+bundle exec ruby katas/[name-of-kata]/your-username/test.rb
 ```
 
 ## Submitting your solution 
