@@ -79,6 +79,7 @@ class Solver
           score = []
 
           score << 10 if game_board[row].sum == 8
+          # this should really be 8, but otherwise it will be equal with the square.
           score << 10 if game_board[row - 1].sum == 7
 
           recs << { shape: 'Z', score: score.sum, orientation: :orientation_1 }
@@ -119,6 +120,7 @@ class Solver
         end
 
         l_block_3 = get_val(row, col) + get_val(row, col + 1) + get_val(row, col + 2) + get_val(row - 1, col + 2)
+
         if l_block_3.zero?
           score = []
 
@@ -126,6 +128,32 @@ class Solver
           score << 10 if game_board[row - 1].sum == 9
 
           recs << { shape: 'L', score: score.sum, orientation: :orientation_4 }
+        end
+
+        n_block_sideways = get_val(row,
+                                   col) + get_val(row, col + 1) + get_val(row - 1, col + 1) + get_val(row - 1, col + 2)
+
+        if n_block_sideways.zero?
+          score = []
+
+          score << 10 if game_board[row].sum == 8
+          # this should really be 8, but otherwise it will be equal with the square.
+          score << 10 if game_board[row - 1].sum == 7
+
+          recs << { shape: 'N', score: score.sum, orientation: :orientation_1 }
+        end
+
+        n_block_upwards = get_val(row,
+                                  col) + get_val(row - 1, col) + get_val(row - 1, col - 1) + get_val(row - 2, col - 1)
+
+        if n_block_upwards.zero?
+          score = []
+
+          score << 10 if game_board[row].sum == 9
+          score << 10 if game_board[row - 1].sum == 8
+          score << 10 if game_board[row - 2].sum == 9
+
+          recs << { shape: 'N', score: score.sum, orientation: :orientation_2 }
         end
 
         # for each row find the max score and return it
