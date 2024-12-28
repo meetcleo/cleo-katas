@@ -31,7 +31,7 @@ class ChristmasDayTest < Minitest::Test
   end
 
   def test_returns_the_correct_weekday_for_1659
-    assert_raises { ChristmasDay.new(1659).weekday }
+    assert_raises(ChristmasDay::Error) { ChristmasDay.new(1659).weekday }
   end
 
   def test_returns_the_correct_weekday_for_1644
