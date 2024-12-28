@@ -10,6 +10,7 @@ class ChristmasDay
 
     attr_reader :index
     private :index
+
     def initialize(index)
       @index = index
     end

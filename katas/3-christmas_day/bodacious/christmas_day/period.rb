@@ -6,11 +6,11 @@ class ChristmasDay
   # @see Range
   # @see Calendar
   class Period < DelegateClass(Range)
-    attr_reader :calendar
+    attr_reader :weekday_calculator
 
-    def initialize(start_year:, end_year:, calendar:)
+    def initialize(start_year:, end_year:, weekday_calculator:)
       super(start_year..end_year)
-      @calendar = calendar
+      @weekday_calculator = weekday_calculator
     end
   end
 end
