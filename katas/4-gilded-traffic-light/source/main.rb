@@ -6,16 +6,7 @@ gemfile do
   source 'https://rubygems.org'
 
   gem 'minitest'
-  gem 'activesupport', '~> 7.0'
 end
-
-# An unsightly blob of procedural code that represents a working traffic light system.
-#  - Only one direction can be green or amber at a time.
-#  - Pedestrians can walk in a direction only when it’s red.
-# traffic_light_system.rb
-# Deliberately messy, procedural-style code that:
-# 1) Updates traffic lights by a single second each time #run is called.
-# 2) Uses inline logic for everything rather than neatly separated methods.
 
 class TrafficLightSystem
   def initialize
