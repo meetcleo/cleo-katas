@@ -61,12 +61,6 @@ class TrafficLightSystem
           light.state = "red"
           light.timer = 10
           @pedestrian_signals[light.direction] = true
-
-        else
-          # Fallback
-          light.state = "red"
-          light.timer = 10
-          @pedestrian_signals[light.direction] = true
         end
       end
     end
