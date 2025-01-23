@@ -29,17 +29,7 @@ class TrafficLightSystem
     # system("clear") || system("cls")
 
     # Print traffic lights
-    @lights.each do |light|
-      # Quick inline way to colour states, done in a messy way rather than a dedicated method.
-      state_colour = case light.state
-                     when "red"   then "\e[31m#{light.state}\e[0m"
-                     when "green" then "\e[32m#{light.state}\e[0m"
-                     when "amber" then "\e[33m#{light.state}\e[0m"
-                     else light.state
-                     end
-
-      puts "Direction: #{light.direction}, State: #{state_colour}, Time left: #{light.timer}s"
-    end
+    puts @lights.map(&:to_s)
 
     # Update timers and transition states in one big chunk
     @lights.each do |light|

@@ -1,6 +1,6 @@
 # traffic_light_system_test.rb
 
-require_relative 'main'
+require_relative '../main'
 require "minitest/autorun"
 class TrafficLightSystemTest < Minitest::Test
   def test_initial_output
