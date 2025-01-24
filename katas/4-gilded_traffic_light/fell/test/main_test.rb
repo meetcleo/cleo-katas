@@ -2,6 +2,7 @@
 
 require_relative '../main'
 require 'minitest/autorun'
+
 class TrafficLightSystemTest < Minitest::Test
   def test_initial_output
     system = TrafficLightSystem.new

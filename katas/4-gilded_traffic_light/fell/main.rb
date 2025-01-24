@@ -1,24 +1,10 @@
-# frozen_string_literal: true
-
-require 'bundler/inline'
 require_relative 'traffic_light'
-
-gemfile do
-  source 'https://rubygems.org'
-
-  gem 'minitest'
-  gem 'rubocop'
-end
 
 class TrafficLightSystem
   def initialize
     @lights = [
-      TrafficLight.new(direction: 'North-South', state: 'red',   timer: 10),
-      TrafficLight.new(direction: 'East-West',   state: 'green', timer: 8)
-    ]
-    @pedestrian_signals = [
-      PedestrianSignal.new(direction: 'North-South', can_walk: false),
-      PedestrianSignal.new(direction: 'East-West', can_walk: false)
+      TrafficLight.new(direction: 'North-South', state: 'red', timer: 10),
+      TrafficLight.new(direction: 'East-West', state: 'green', timer: 8)
     ]
   end
 
@@ -43,34 +29,34 @@ class TrafficLightSystem
         # Switch from red -> green
         light.state = 'green'
         light.timer = 8
-        @pedestrian_signals[light.direction] = false
+        light.can_walk = false
         # Force the opposite light red if it's green or amber
         opposite = @lights.find { |l| l.direction != light.direction }
         if %w[green amber].include?(opposite.state)
           opposite.state = 'red'
           opposite.timer = 10
-          @pedestrian_signals[opposite.direction] = true
+          opposite.can_walk = true
         end
 
       when 'green'
         # Switch from green -> amber
         light.state = 'amber'
         light.timer = 3
-        @pedestrian_signals[light.direction] = false
+        light.can_walk = false
 
       when 'amber'
         # Switch from amber -> red
         light.state = 'red'
         light.timer = 10
-        @pedestrian_signals[light.direction] = true
+        light.can_walk = true
       end
     end
 
     # Print pedestrian signals
     puts "\nPedestrian signals:"
-    @pedestrian_signals.each do |direction, can_walk|
-      signal_text = can_walk ? "\e[32mWALK\e[0m" : "\e[31mDON'T WALK\e[0m"
-      puts "  #{direction}: #{signal_text}"
+    @lights.each do |light|
+      light.pedestrian_signal.to_s
+      puts "  #{light.direction}: #{light.pedestrian_signal}"
     end
 
     puts '---------------------------------'

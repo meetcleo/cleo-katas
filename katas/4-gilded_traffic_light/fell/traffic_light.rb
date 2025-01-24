@@ -1,6 +1,12 @@
+require_relative 'pedestrian_signal'
+require_relative  'lib/colorize'
+
 class TrafficLight
+  include Colorize
+
   def initialize(direction:, state:, timer:)
     @direction = direction
+    @pedestrian_signal = PedestrianSignal.new(can_walk: false)
     @state = state
     @timer = timer
   end
@@ -13,20 +19,24 @@ class TrafficLight
     self.timer -= 1
   end
 
-  attr_reader :direction
+  def can_walk
+    pedestrian_signal.can_walk
+  end
+
+  def can_walk=(boolean)
+    pedestrian_signal.can_walk = (boolean)
+  end
+
+  attr_reader :direction, :pedestrian_signal
   attr_accessor :state, :timer
 
   private
 
   def colorized_state
-    "#{color_code + state}\e[0m"
-  end
-
-  def color_code
     case state
-    when 'red'   then "\e[31m"
-    when 'green' then "\e[32m"
-    when 'amber' then "\e[33m"
+    when 'red' then red(state)
+    when 'green' then green(state)
+    when 'amber' then amber(state)
     end
   end
 end
