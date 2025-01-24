@@ -11,6 +11,9 @@ class TrafficLight
     @timer = timer
   end
 
+  attr_reader :direction, :pedestrian_signal
+  attr_accessor :state, :timer
+
   def to_s
     "Direction: #{direction}, State: #{colorized_state}, Time left: #{timer}s"
   end
@@ -30,9 +33,6 @@ class TrafficLight
   def can_walk=(boolean)
     pedestrian_signal.can_walk = (boolean)
   end
-
-  attr_reader :direction, :pedestrian_signal
-  attr_accessor :state, :timer
 
   private
 
