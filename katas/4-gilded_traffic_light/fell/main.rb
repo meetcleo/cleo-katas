@@ -33,7 +33,7 @@ class TrafficLightSystem
 
     # Update timers and transition states in one big chunk
     @lights.each do |light|
-      light.timer -= 1
+      light.progress
       if light.timer <= 0
         # Big case statement for state transitions
         case light.state

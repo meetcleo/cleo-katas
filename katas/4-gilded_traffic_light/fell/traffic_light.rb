@@ -9,6 +9,10 @@ class TrafficLight
     "Direction: #{direction}, State: #{colorized_state}, Time left: #{timer}s"
   end
 
+  def progress
+    self.timer -= 1
+  end
+
   attr_reader :direction
   attr_accessor :state, :timer
 
