@@ -26,11 +26,11 @@ class TrafficLightSystem
 
       light.next_state!
 
-      next unless light.state == TrafficLight::GREEN_STATE
+      # No car crashes!
+      next unless @lights.all?(&:allows_traffic?)
 
-      # If we're turning green, then the other light must turn red
-      opposite = @lights.find { |l| l.direction != light.direction }
-      opposite.red! if opposite.allows_traffic?
+      # Since we're turning green, then the other light must turn red
+      @lights.find { |l| l.direction != light.direction }.red!
     end
 
     # Print pedestrian signals

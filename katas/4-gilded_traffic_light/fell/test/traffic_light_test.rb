@@ -68,7 +68,7 @@ class TrafficLightTest < Minitest::Test
     assert_includes light.to_s, "\e[33mamber\e[0m"
   end
 
-  def test_progress
+  def test_progress_decrements_timer
     light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::GREEN_STATE)
     light.progress
 
