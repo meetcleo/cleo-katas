@@ -4,6 +4,15 @@ require_relative 'lib/colorize'
 class TrafficLight
   include Colorize
 
+  RED_STATE = -'red'
+  GREEN_STATE = -'green'
+  AMBER_STATE = -'amber'
+
+  GOING_STATES = [
+    TrafficLight::GREEN_STATE,
+    TrafficLight::AMBER_STATE,
+  ].freeze
+
   def initialize(direction:, state:, timer:)
     @direction = direction
     @pedestrian_signal = PedestrianSignal.new(can_walk: false)
@@ -42,9 +51,12 @@ class TrafficLight
 
   def colorized_state
     case state
-    when 'red' then red(state)
-    when 'green' then green(state)
-    when 'amber' then amber(state)
+    when RED_STATE
+      red(state)
+    when GREEN_STATE
+      green(state)
+    when AMBER_STATE
+      amber(state)
     end
   end
 end
