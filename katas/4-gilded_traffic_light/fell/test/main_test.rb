@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # traffic_light_system_test.rb
 
 require_relative '../main'

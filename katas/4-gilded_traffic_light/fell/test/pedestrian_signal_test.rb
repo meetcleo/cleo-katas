@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative '../pedestrian_signal'
 require 'minitest/autorun'
 
