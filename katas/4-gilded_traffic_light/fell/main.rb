@@ -30,7 +30,7 @@ class TrafficLightSystem
 
       # If we're turning green, then the other light must turn red
       opposite = @lights.find { |l| l.direction != light.direction }
-      opposite.red! if TrafficLight::GOING_STATES.include?(opposite.state)
+      opposite.red! if opposite.allows_traffic?
     end
 
     # Print pedestrian signals
