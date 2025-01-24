@@ -3,16 +3,16 @@ require 'minitest/autorun'
 
 class TrafficLightTest < Minitest::Test
   def test_direction
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::GREEN_STATE)
 
     assert_equal 'Widdershins', light.direction
   end
 
   def test_state
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::GREEN_STATE)
 
     # reader
-    assert_equal 'green', light.state
+    assert_equal TrafficLight::GREEN_STATE, light.state
 
     # writer
     light.state = 'test_state'
@@ -20,7 +20,7 @@ class TrafficLightTest < Minitest::Test
   end
 
   def test_timer
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::GREEN_STATE)
 
     # reader
     assert_equal 55, light.timer
@@ -31,21 +31,21 @@ class TrafficLightTest < Minitest::Test
   end
 
   def test_direction_to_s
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::GREEN_STATE)
     light.to_s
 
     assert_includes light.to_s, 'Direction: Widdershins'
   end
 
   def test_time_left_to_s
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::GREEN_STATE)
     light.to_s
 
     assert_includes light.to_s, 'Time left: 55s'
   end
 
   def test_red_light_to_s
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'red')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::RED_STATE)
 
     light.to_s
 
@@ -53,7 +53,7 @@ class TrafficLightTest < Minitest::Test
   end
 
   def test_green_light_to_s
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::GREEN_STATE)
 
     light.to_s
 
@@ -61,7 +61,7 @@ class TrafficLightTest < Minitest::Test
   end
 
   def test_amber_light_to_s
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'amber')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::AMBER_STATE)
 
     light.to_s
 
@@ -69,14 +69,14 @@ class TrafficLightTest < Minitest::Test
   end
 
   def test_progress
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::GREEN_STATE)
     light.progress
 
     assert_equal 54, light.timer
   end
 
   def test_cannot_walk_pedestrian_signal_status
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'red')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::RED_STATE)
 
     light.can_walk = true
 
@@ -84,20 +84,50 @@ class TrafficLightTest < Minitest::Test
   end
 
   def test_can_walk_pedestrian_signal_status
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'red')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: TrafficLight::RED_STATE)
 
     assert_includes light.pedestrian_signal_status, "Widdershins: \e[31mDON'T WALK\e[0m"
   end
 
   def test_current_state_complete
-    light = TrafficLight.new(direction: 'Widdershins', timer: 0, state: 'red')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 0, state: TrafficLight::RED_STATE)
 
     assert_equal true, light.current_state_complete?
   end
 
   def test_current_state_incomplete
-    light = TrafficLight.new(direction: 'Widdershins', timer: 1, state: 'red')
+    light = TrafficLight.new(direction: 'Widdershins', timer: 1, state: TrafficLight::RED_STATE)
 
     assert_equal false, light.current_state_complete?
+  end
+
+  def test_red
+    light = TrafficLight.new(direction: 'Widdershins', timer: 1, state: TrafficLight::GREEN_STATE)
+
+    light.red!
+
+    assert_equal TrafficLight::RED_STATE, light.state
+    assert_equal 10, light.timer
+    assert_equal true, light.can_walk
+  end
+
+  def test_green
+    light = TrafficLight.new(direction: 'Widdershins', timer: 1, state: TrafficLight::RED_STATE)
+
+    light.green!
+
+    assert_equal TrafficLight::GREEN_STATE, light.state
+    assert_equal 8, light.timer
+    assert_equal false, light.can_walk
+  end
+
+  def test_amber
+    light = TrafficLight.new(direction: 'Widdershins', timer: 1, state: TrafficLight::RED_STATE)
+
+    light.amber!
+
+    assert_equal TrafficLight::AMBER_STATE, light.state
+    assert_equal 3, light.timer
+    assert_equal false, light.can_walk
   end
 end

@@ -10,8 +10,23 @@ class TrafficLight
 
   GOING_STATES = [
     TrafficLight::GREEN_STATE,
-    TrafficLight::AMBER_STATE,
+    TrafficLight::AMBER_STATE
   ].freeze
+
+  STATE_DEFAULTS = {
+    RED_STATE => {
+      timer: 10,
+      can_walk: true
+    },
+    GREEN_STATE => {
+      timer: 8,
+      can_walk: false
+    },
+    AMBER_STATE => {
+      timer: 3,
+      can_walk: false
+    }
+  }.freeze
 
   def initialize(direction:, state:, timer:)
     @direction = direction
@@ -20,7 +35,7 @@ class TrafficLight
     @timer = timer
   end
 
-  attr_reader :direction, :pedestrian_signal
+  attr_reader :direction
   attr_accessor :state, :timer
 
   def to_s
@@ -47,7 +62,31 @@ class TrafficLight
     !timer.positive?
   end
 
+  def red!
+    self.state = RED_STATE
+    self.timer = state_defaults(state: RED_STATE, key: :timer)
+    self.can_walk = state_defaults(state: RED_STATE, key: :can_walk)
+  end
+
+  def green!
+    self.state = GREEN_STATE
+    self.timer = state_defaults(state: GREEN_STATE, key: :timer)
+    self.can_walk = state_defaults(state: GREEN_STATE, key: :can_walk)
+  end
+
+  def amber!
+    self.state = AMBER_STATE
+    self.timer = state_defaults(state: AMBER_STATE, key: :timer)
+    self.can_walk = state_defaults(state: AMBER_STATE, key: :can_walk)
+  end
+
   private
+
+  attr_reader :pedestrian_signal
+
+  def state_defaults(state:, key:)
+    STATE_DEFAULTS[state][key]
+  end
 
   def colorized_state
     case state

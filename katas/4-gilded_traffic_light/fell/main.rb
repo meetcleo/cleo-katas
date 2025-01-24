@@ -26,29 +26,18 @@ class TrafficLightSystem
       # Big case statement for state transitions
       case light.state
       when TrafficLight::RED_STATE
-        # Switch from red -> green
-        light.state = TrafficLight::GREEN_STATE
-        light.timer = 8
-        light.can_walk = false
+        # Switch to green
+        light.green!
         # Force the opposite light red if it's green or amber
         opposite = @lights.find { |l| l.direction != light.direction }
-        if TrafficLight::GOING_STATES.include?(opposite.state)
-          opposite.state = TrafficLight::RED_STATE
-          opposite.timer = 10
-          opposite.can_walk = true
-        end
+        opposite.red! if TrafficLight::GOING_STATES.include?(opposite.state)
 
       when TrafficLight::GREEN_STATE
-        # Switch from green -> amber
-        light.state = TrafficLight::AMBER_STATE
-        light.timer = 3
-        light.can_walk = false
-
+        # Switch to amber
+        light.amber!
       when TrafficLight::AMBER_STATE
-        # Switch from amber -> red
-        light.state = TrafficLight::RED_STATE
-        light.timer = 10
-        light.can_walk = true
+        # Switch to red
+        light.red!
       end
     end
 
