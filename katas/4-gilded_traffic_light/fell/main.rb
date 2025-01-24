@@ -1,5 +1,6 @@
 require_relative 'traffic_light'
 
+# Main class providing orchestration of multiple traffic lights
 class TrafficLightSystem
   def initialize
     @lights = [

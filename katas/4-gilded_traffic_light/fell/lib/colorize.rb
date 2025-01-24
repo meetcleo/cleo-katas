@@ -1,3 +1,4 @@
+# Provides helper methods for colorized text
 module Colorize
   RED = -"\e[31m"
   GREEN = -"\e[32m"

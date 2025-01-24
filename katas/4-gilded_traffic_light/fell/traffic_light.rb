@@ -1,6 +1,8 @@
 require_relative 'pedestrian_signal'
 require_relative 'lib/colorize'
 
+# Tracks the state, timer, and pedestrian signals,
+# and provides presentation logic.
 class TrafficLight
   include Colorize
 
