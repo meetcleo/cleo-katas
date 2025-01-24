@@ -1,5 +1,5 @@
 AllCops:
-    NewCops: enable
+  NewCops: enable
 # This is the default on ruby 3.4, so we don't need it
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never

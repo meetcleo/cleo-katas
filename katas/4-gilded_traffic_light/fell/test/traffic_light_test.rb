@@ -147,19 +147,19 @@ class TrafficLightTest < Minitest::Test
     assert_equal TrafficLight::RED_STATE, light.state
   end
 
-  def test_going_states_red
+  def test_allows_traffic_red
     light = TrafficLight.new(direction: 'Widdershins', timer: 1, state: TrafficLight::RED_STATE)
 
     assert_equal false, light.allows_traffic?
   end
 
-  def test_going_states_green
+  def test_allows_traffic_green
     light = TrafficLight.new(direction: 'Widdershins', timer: 1, state: TrafficLight::GREEN_STATE)
 
     assert_equal true, light.allows_traffic?
   end
 
-  def test_going_states_amber
+  def test_allows_traffic_amber
     light = TrafficLight.new(direction: 'Widdershins', timer: 1, state: TrafficLight::AMBER_STATE)
 
     assert_equal true, light.allows_traffic?

@@ -19,9 +19,22 @@ class TrafficLightSystem
     # Print traffic lights
     puts @lights.map(&:to_s)
 
-    # Update timers and transition states in one big chunk
+    progress_lights
+
+    # Print pedestrian signals
+    puts "\nPedestrian signals:"
+    puts(@lights.map { |l| "  #{l.pedestrian_signal_status}" })
+
+    puts '---------------------------------'
+  end
+
+  private
+
+  def progress_lights
     @lights.each do |light|
+      # TODO: this can be a single method on light down to next_state
       light.progress
+
       next unless light.current_state_complete?
 
       light.next_state!
@@ -32,12 +45,6 @@ class TrafficLightSystem
       # Since we're turning green, then the other light must turn red
       @lights.find { |l| l.direction != light.direction }.red!
     end
-
-    # Print pedestrian signals
-    puts "\nPedestrian signals:"
-    puts(@lights.map { |l| "  #{l.pedestrian_signal_status}" })
-
-    puts '---------------------------------'
   end
 end
 
