@@ -24,22 +24,13 @@ class TrafficLightSystem
       light.progress
       next unless light.current_state_complete?
 
-      # Big case statement for state transitions
-      case light.state
-      when TrafficLight::RED_STATE
-        # Switch to green
-        light.green!
-        # Force the opposite light red if it's green or amber
-        opposite = @lights.find { |l| l.direction != light.direction }
-        opposite.red! if TrafficLight::GOING_STATES.include?(opposite.state)
+      light.next_state!
 
-      when TrafficLight::GREEN_STATE
-        # Switch to amber
-        light.amber!
-      when TrafficLight::AMBER_STATE
-        # Switch to red
-        light.red!
-      end
+      next unless light.state == TrafficLight::GREEN_STATE
+
+      # If we're turning green, then the other light must turn red
+      opposite = @lights.find { |l| l.direction != light.direction }
+      opposite.red! if TrafficLight::GOING_STATES.include?(opposite.state)
     end
 
     # Print pedestrian signals

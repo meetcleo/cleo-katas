@@ -52,6 +52,18 @@ class TrafficLight
     self.timer -= 1
   end
 
+  # takes lights round in red -> green -> amber -> red cycle
+  def next_state!
+    case state
+    when RED_STATE
+      green!
+    when GREEN_STATE
+      amber!
+    when AMBER_STATE
+      red!
+    end
+  end
+
   def can_walk
     pedestrian_signal.can_walk
   end
