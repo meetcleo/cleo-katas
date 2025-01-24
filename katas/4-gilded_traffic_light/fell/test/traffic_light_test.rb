@@ -88,4 +88,16 @@ class TrafficLightTest < Minitest::Test
 
     assert_includes light.pedestrian_signal_status, "Widdershins: \e[31mDON'T WALK\e[0m"
   end
+
+  def test_current_state_complete
+    light = TrafficLight.new(direction: 'Widdershins', timer: 0, state: 'red')
+
+    assert_equal true, light.current_state_complete?
+  end
+
+  def test_current_state_incomplete
+    light = TrafficLight.new(direction: 'Widdershins', timer: 1, state: 'red')
+
+    assert_equal false, light.current_state_complete?
+  end
 end

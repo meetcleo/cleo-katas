@@ -34,6 +34,10 @@ class TrafficLight
     pedestrian_signal.can_walk = (boolean)
   end
 
+  def current_state_complete?
+    !timer.positive?
+  end
+
   private
 
   def colorized_state
