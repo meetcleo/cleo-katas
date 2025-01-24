@@ -1,5 +1,3 @@
-# traffic_light_system_test.rb
-
 require_relative '../traffic_light'
 require "minitest/autorun"
 
