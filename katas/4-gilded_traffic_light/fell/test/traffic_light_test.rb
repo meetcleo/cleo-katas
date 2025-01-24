@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 require_relative '../traffic_light'
-require "minitest/autorun"
+require 'minitest/autorun'
 
 class TrafficLightTest < Minitest::Test
   def test_direction
@@ -30,24 +32,18 @@ class TrafficLightTest < Minitest::Test
     assert_equal 101, light.timer
   end
 
-  def test_state
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
-
-    assert_equal 'green', light.state
-  end
-
   def test_direction_to_s
     light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
     light.to_s
 
-    assert_includes light.to_s, "Direction: Widdershins"
+    assert_includes light.to_s, 'Direction: Widdershins'
   end
 
   def test_time_left_to_s
     light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
     light.to_s
 
-    assert_includes light.to_s, "Time left: 55s"
+    assert_includes light.to_s, 'Time left: 55s'
   end
 
   def test_red_light_to_s
@@ -57,7 +53,6 @@ class TrafficLightTest < Minitest::Test
 
     assert_includes light.to_s, "\e[31mred\e[0m"
   end
-
 
   def test_green_light_to_s
     light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')

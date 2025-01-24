@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 require_relative '../pedestrian_signal'
-require "minitest/autorun"
+require 'minitest/autorun'
 
 class PedestrianSignalTest < Minitest::Test
   def test_direction

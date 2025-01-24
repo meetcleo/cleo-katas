@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TrafficLight
   def initialize(direction:, state:, timer:)
     @direction = direction
@@ -24,9 +26,9 @@ class TrafficLight
 
   def color_code
     case state
-    when "red"   then "\e[31m"
-    when "green" then "\e[32m"
-    when "amber" then "\e[33m"
+    when 'red'   then "\e[31m"
+    when 'green' then "\e[32m"
+    when 'amber' then "\e[33m"
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PedestrianSignal
   def initialize(can_walk:, direction:)
     @direction = direction

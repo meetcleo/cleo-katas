@@ -7,18 +7,19 @@ gemfile do
   source 'https://rubygems.org'
 
   gem 'minitest'
+  gem 'rubocop'
 end
 
 class TrafficLightSystem
   def initialize
     @lights = [
-      TrafficLight.new(direction: "North-South", state: "red",   timer: 10),
-      TrafficLight.new(direction: "East-West",   state: "green", timer: 8),
+      TrafficLight.new(direction: 'North-South', state: 'red',   timer: 10),
+      TrafficLight.new(direction: 'East-West',   state: 'green', timer: 8)
     ]
-    @pedestrian_signals = {
-      "North-South" => false,
-      "East-West"   => false
-    }
+    @pedestrian_signals = [
+      PedestrianSignal.new(direction: 'North-South', can_walk: false),
+      PedestrianSignal.new(direction: 'East-West', can_walk: false)
+    ]
   end
 
   # Advances the system by one second: prints current status, decrements timers,
@@ -34,34 +35,34 @@ class TrafficLightSystem
     # Update timers and transition states in one big chunk
     @lights.each do |light|
       light.progress
-      if light.timer <= 0
-        # Big case statement for state transitions
-        case light.state
-        when "red"
-          # Switch from red -> green
-          light.state = "green"
-          light.timer = 8
-          @pedestrian_signals[light.direction] = false
-          # Force the opposite light red if it's green or amber
-          opposite = @lights.find { |l| l.direction != light.direction }
-          if %w[green amber].include?(opposite.state)
-            opposite.state = "red"
-            opposite.timer = 10
-            @pedestrian_signals[opposite.direction] = true
-          end
+      next unless light.timer <= 0
 
-        when "green"
-          # Switch from green -> amber
-          light.state = "amber"
-          light.timer = 3
-          @pedestrian_signals[light.direction] = false
-
-        when "amber"
-          # Switch from amber -> red
-          light.state = "red"
-          light.timer = 10
-          @pedestrian_signals[light.direction] = true
+      # Big case statement for state transitions
+      case light.state
+      when 'red'
+        # Switch from red -> green
+        light.state = 'green'
+        light.timer = 8
+        @pedestrian_signals[light.direction] = false
+        # Force the opposite light red if it's green or amber
+        opposite = @lights.find { |l| l.direction != light.direction }
+        if %w[green amber].include?(opposite.state)
+          opposite.state = 'red'
+          opposite.timer = 10
+          @pedestrian_signals[opposite.direction] = true
         end
+
+      when 'green'
+        # Switch from green -> amber
+        light.state = 'amber'
+        light.timer = 3
+        @pedestrian_signals[light.direction] = false
+
+      when 'amber'
+        # Switch from amber -> red
+        light.state = 'red'
+        light.timer = 10
+        @pedestrian_signals[light.direction] = true
       end
     end
 
@@ -72,7 +73,7 @@ class TrafficLightSystem
       puts "  #{direction}: #{signal_text}"
     end
 
-    puts "---------------------------------"
+    puts '---------------------------------'
   end
 end
 
