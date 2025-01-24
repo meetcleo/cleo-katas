@@ -68,18 +68,24 @@ class TrafficLightTest < Minitest::Test
     assert_includes light.to_s, "\e[33mamber\e[0m"
   end
 
-  def test_amber_light_to_s
-    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'amber')
-
-    light.to_s
-
-    assert_includes light.to_s, "\e[33mamber\e[0m"
-  end
-
   def test_progress
     light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'green')
     light.progress
 
     assert_equal 54, light.timer
+  end
+
+  def test_cannot_walk_pedestrian_signal_status
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'red')
+
+    light.can_walk = true
+
+    assert_includes light.pedestrian_signal_status, "Widdershins: \e[32mWALK\e[0m"
+  end
+
+  def test_can_walk_pedestrian_signal_status
+    light = TrafficLight.new(direction: 'Widdershins', timer: 55, state: 'red')
+
+    assert_includes light.pedestrian_signal_status, "Widdershins: \e[31mDON'T WALK\e[0m"
   end
 end

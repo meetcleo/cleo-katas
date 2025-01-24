@@ -1,8 +1,8 @@
 module Colorize
-  RED = "\e[31m"
-  GREEN = "\e[32m"
-  AMBER = "\e[33m"
-  RESET = "\e[0m"
+  RED = -"\e[31m"
+  GREEN = -"\e[32m"
+  AMBER = -"\e[33m"
+  RESET = -"\e[0m"
 
   def red(string)
     "#{RED}#{string}#{RESET}"

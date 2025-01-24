@@ -1,5 +1,5 @@
 require_relative 'pedestrian_signal'
-require_relative  'lib/colorize'
+require_relative 'lib/colorize'
 
 class TrafficLight
   include Colorize
@@ -13,6 +13,10 @@ class TrafficLight
 
   def to_s
     "Direction: #{direction}, State: #{colorized_state}, Time left: #{timer}s"
+  end
+
+  def pedestrian_signal_status
+    "#{direction}: #{pedestrian_signal}"
   end
 
   def progress

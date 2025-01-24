@@ -54,10 +54,7 @@ class TrafficLightSystem
 
     # Print pedestrian signals
     puts "\nPedestrian signals:"
-    @lights.each do |light|
-      light.pedestrian_signal.to_s
-      puts "  #{light.direction}: #{light.pedestrian_signal}"
-    end
+    puts(@lights.map { |l| "  #{l.pedestrian_signal_status}" })
 
     puts '---------------------------------'
   end

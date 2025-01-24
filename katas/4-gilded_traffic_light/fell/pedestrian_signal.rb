@@ -1,10 +1,10 @@
-require_relative  'lib/colorize'
+require_relative 'lib/colorize'
 
 class PedestrianSignal
   include Colorize
 
-  WALK = "WALK"
-  DONT_WALK = "DON'T WALK"
+  WALK = -'WALK'
+  DONT_WALK = -"DON'T WALK"
 
   def initialize(can_walk:)
     @can_walk = can_walk
