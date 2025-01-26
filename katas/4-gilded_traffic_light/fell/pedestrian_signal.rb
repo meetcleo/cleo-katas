@@ -1,7 +1,6 @@
 require_relative 'lib/colorize'
 
-# Tracks whether pedestrians can walk or not
-# and provides presentation logic
+# Tracks whether pedestrians can walk or not and provides presentation logic
 class PedestrianSignal
   include Colorize
 

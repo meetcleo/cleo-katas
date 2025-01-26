@@ -34,11 +34,15 @@ class TrafficLightSystem
     @lights.each do |light|
       light.progress!
 
-      # No car crashes!
+      # TODO: This is only necessary because the timings are such that we will
+      # have a clash each cycle; an ideal solution would be to change the
+      # timings, but the existing output remaining the same is a requirement
+      #
+      # Nothing to do unless there is goign to be a conflict
       next unless @lights.all?(&:allows_traffic?)
 
       # Since we're turning green, then the other light must turn red
-      @lights.find { it.direction != light.direction }.red!
+      @lights.find { it != light }.red!
     end
   end
 end
