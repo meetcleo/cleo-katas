@@ -16,18 +16,9 @@ class TrafficLight
   ].freeze
 
   STATE_DEFAULTS = {
-    RED_STATE => {
-      timer: 10,
-      can_walk: true
-    },
-    GREEN_STATE => {
-      timer: 8,
-      can_walk: false
-    },
-    AMBER_STATE => {
-      timer: 3,
-      can_walk: false
-    }
+    RED_STATE => { timer: 10, can_walk: true },
+    GREEN_STATE => { timer: 8, can_walk: false },
+    AMBER_STATE => { timer: 3, can_walk: false }
   }.freeze
 
   def initialize(direction:, state:, timer:)
@@ -48,8 +39,9 @@ class TrafficLight
     "#{direction}: #{pedestrian_signal}"
   end
 
-  def progress
+  def progress!
     self.timer -= 1
+    next_state! if current_state_complete?
   end
 
   def can_walk

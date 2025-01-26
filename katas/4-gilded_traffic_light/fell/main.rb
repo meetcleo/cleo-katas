@@ -32,18 +32,13 @@ class TrafficLightSystem
 
   def progress_lights
     @lights.each do |light|
-      # TODO: this can be a single method on light down to next_state
-      light.progress
-
-      next unless light.current_state_complete?
-
-      light.next_state!
+      light.progress!
 
       # No car crashes!
       next unless @lights.all?(&:allows_traffic?)
 
       # Since we're turning green, then the other light must turn red
-      @lights.find { |l| l.direction != light.direction }.red!
+      @lights.find { it.direction != light.direction }.red!
     end
   end
 end
