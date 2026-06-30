@@ -49,6 +49,10 @@ class GildedRose
     @days_remaining -= 1
   end
 
+  def tick_sulfaras
+
+  end
+
   def tick
     if @name == 'Normal Item'
       return tick_normal
@@ -56,6 +60,10 @@ class GildedRose
 
     if @name == 'Aged Brie'
       return tick_brie
+    end
+
+    if @name == 'Sulfuras, Hand of Ragnaros'
+      return tick_sulfaras
     end
 
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
