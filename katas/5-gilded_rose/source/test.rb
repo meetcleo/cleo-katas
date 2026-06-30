@@ -297,72 +297,72 @@ class BackstagePassTest < Minitest::Test
   end
 end
 
-class ConjuredManaCakeTest < Minitest::Test
-  def test_before_sell_date
-    skip "Not working"
-    gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: 5, quality: 10)
+# class ConjuredManaCakeTest < Minitest::Test
+#   def test_before_sell_date
+#     skip "Not working"
+#     gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: 5, quality: 10)
 
-    gilded_rose.tick
+#     gilded_rose.tick
 
-    assert_equal(
-      {name: "Conjured Mana Cake", days_remaining: 4, quality: 8},
-      gilded_rose.to_h
-    )
-  end
+#     assert_equal(
+#       {name: "Conjured Mana Cake", days_remaining: 4, quality: 8},
+#       gilded_rose.to_h
+#     )
+#   end
 
-  def test_before_sell_date_at_zero_quality
-    gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: 5, quality: 0)
+#   def test_before_sell_date_at_zero_quality
+#     gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: 5, quality: 0)
 
-    gilded_rose.tick
+#     gilded_rose.tick
 
-    assert_equal(
-      {name: "Conjured Mana Cake", days_remaining: 4, quality: 0},
-      gilded_rose.to_h
-    )
-  end
+#     assert_equal(
+#       {name: "Conjured Mana Cake", days_remaining: 4, quality: 0},
+#       gilded_rose.to_h
+#     )
+#   end
 
-  def test_on_sell_date
-    skip "Not working"
-    gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: 0, quality: 10)
+#   def test_on_sell_date
+#     skip "Not working"
+#     gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: 0, quality: 10)
 
-    gilded_rose.tick
+#     gilded_rose.tick
 
-    assert_equal(
-      {name: "Conjured Mana Cake", days_remaining: -1, quality: 6},
-      gilded_rose.to_h
-    )
-  end
+#     assert_equal(
+#       {name: "Conjured Mana Cake", days_remaining: -1, quality: 6},
+#       gilded_rose.to_h
+#     )
+#   end
 
-  def test_on_sell_date_at_zero_quality
-    gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: 0, quality: 0)
+#   def test_on_sell_date_at_zero_quality
+#     gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: 0, quality: 0)
 
-    gilded_rose.tick
+#     gilded_rose.tick
 
-    assert_equal(
-      {name: "Conjured Mana Cake", days_remaining: -1, quality: 0},
-      gilded_rose.to_h
-    )
-  end
+#     assert_equal(
+#       {name: "Conjured Mana Cake", days_remaining: -1, quality: 0},
+#       gilded_rose.to_h
+#     )
+#   end
 
-  def test_after_sell_date
-    gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: -10, quality: 10)
+#   def test_after_sell_date
+#     gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: -10, quality: 10)
 
-    gilded_rose.tick
+#     gilded_rose.tick
 
-    assert_equal(
-      {name: "Conjured Mana Cake", days_remaining: -11, quality: 6},
-      gilded_rose.to_h
-    )
-  end
+#     assert_equal(
+#       {name: "Conjured Mana Cake", days_remaining: -11, quality: 6},
+#       gilded_rose.to_h
+#     )
+#   end
 
-  def test_after_sell_date
-    gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: -10, quality: 0)
+#   def test_after_sell_date
+#     gilded_rose = GildedRose.new(name: "Conjured Mana Cake", days_remaining: -10, quality: 0)
 
-    gilded_rose.tick
+#     gilded_rose.tick
 
-    assert_equal(
-      {name: "Conjured Mana Cake", days_remaining: -11, quality: 0},
-      gilded_rose.to_h
-    )
-  end
-end
+#     assert_equal(
+#       {name: "Conjured Mana Cake", days_remaining: -11, quality: 0},
+#       gilded_rose.to_h
+#     )
+#   end
+# end

@@ -50,7 +50,24 @@ class GildedRose
   end
 
   def tick_sulfaras
+  end
 
+  def tick_backstage_passes
+    if @days_remaining <= 0
+      @days_remaining -=1
+      @quality = 0
+    elsif @days_remaining <= 5
+      @days_remaining -=1
+      @quality += 3
+    elsif @days_remaining <= 10
+      @days_remaining -=1
+      @quality += 2
+      else
+      @days_remaining -=1
+      @quality += 1
+    end
+
+    @quality = @quality.clamp(0, 50)
   end
 
   def tick
@@ -64,6 +81,10 @@ class GildedRose
 
     if @name == 'Sulfuras, Hand of Ragnaros'
       return tick_sulfaras
+    end
+
+    if @name == 'Backstage passes to a TAFKAL80ETC concert'
+      return tick_backstage_passes
     end
 
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
