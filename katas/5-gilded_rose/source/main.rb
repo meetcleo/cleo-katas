@@ -54,19 +54,16 @@ class GildedRose
 
   def tick_backstage_passes
     if @days_remaining <= 0
-      @days_remaining -=1
       @quality = 0
     elsif @days_remaining <= 5
-      @days_remaining -=1
       @quality += 3
     elsif @days_remaining <= 10
-      @days_remaining -=1
       @quality += 2
       else
-      @days_remaining -=1
       @quality += 1
     end
 
+    @days_remaining -=1
     @quality = @quality.clamp(0, 50)
   end
 
