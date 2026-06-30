@@ -49,7 +49,7 @@ class GildedRoseTest < Minitest::Test
   end
 end
 
-class AgedBrieTest
+class AgedBrieTest < Minitest::Test
   def test_before_sell_date
     gilded_rose = GildedRose.new(name: "Aged Brie", days_remaining: 5, quality: 10)
 
