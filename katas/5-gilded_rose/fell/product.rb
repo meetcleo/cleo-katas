@@ -10,9 +10,7 @@ class Product
   def tick
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
       if @quality > 0
-        if @name != "Sulfuras, Hand of Ragnaros"
-          @quality = @quality - 1
-        end
+        @quality = @quality - 1
       end
     else
       if @quality < 50
@@ -31,16 +29,14 @@ class Product
         end
       end
     end
-    if @name != "Sulfuras, Hand of Ragnaros"
-      @days_remaining = @days_remaining - 1
-    end
+
+    @days_remaining = @days_remaining - 1
+
     if @days_remaining < 0
       if @name != "Aged Brie"
         if @name != "Backstage passes to a TAFKAL80ETC concert"
           if @quality > 0
-            if @name != "Sulfuras, Hand of Ragnaros"
-              @quality = @quality - 1
-            end
+            @quality = @quality - 1
           end
         else
           @quality = @quality - @quality
