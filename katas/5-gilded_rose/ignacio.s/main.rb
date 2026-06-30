@@ -23,7 +23,7 @@ class GildedRose
 
   def tick
     # raise "Not implemented" if @name == "Aged Brie"
-    return {} if @name == "Aged Brie"
+    return brie if @name == "Aged Brie"
 
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
       if @quality > 0
@@ -69,5 +69,13 @@ class GildedRose
         end
       end
     end
+  end
+
+  def brie
+    @quality = @quality + 1
+    @quality = @quality + 1 if @days_remaining <= 0
+    @quality = 50 if @quality > 50
+      
+    @days_remaining = @days_remaining - 1
   end
 end
