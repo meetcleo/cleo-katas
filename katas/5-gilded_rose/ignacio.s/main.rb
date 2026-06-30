@@ -24,6 +24,7 @@ class GildedRose
   def tick
     # raise "Not implemented" if @name == "Aged Brie"
     return brie if @name == "Aged Brie"
+    return sulfuras if @name == "Sulfuras, Hand of Ragnaros"
 
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
       if @quality > 0
@@ -77,5 +78,10 @@ class GildedRose
     @quality = 50 if @quality > 50
       
     @days_remaining = @days_remaining - 1
+  end
+
+  def sulfuras
+    # @quality = 80
+    # @days_remaining = @days_remaining - 1
   end
 end
