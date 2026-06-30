@@ -26,6 +26,7 @@ class GildedRose
     return brie if @name == "Aged Brie"
     return sulfuras if @name == "Sulfuras, Hand of Ragnaros"
     return backstage if @name == "Backstage passes to a TAFKAL80ETC concert"
+    return conjured if @name == "Conjured Mana Cake"
 
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
       if @quality > 0
@@ -92,6 +93,13 @@ class GildedRose
     @quality = @quality + 1 if @days_remaining < 6
     @quality = 0 if @days_remaining <= 0
     @quality = 50 if @quality > 50
+    @days_remaining = @days_remaining - 1
+  end
+
+  def conjured
+    @quality = @quality - 2
+    @quality = @quality - 2 if @days_remaining <= 0
+    @quality = 0 if @quality < 0
     @days_remaining = @days_remaining - 1
   end
 end
