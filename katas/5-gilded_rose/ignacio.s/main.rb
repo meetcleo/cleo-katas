@@ -25,6 +25,7 @@ class GildedRose
     # raise "Not implemented" if @name == "Aged Brie"
     return brie if @name == "Aged Brie"
     return sulfuras if @name == "Sulfuras, Hand of Ragnaros"
+    return backstage if @name == "Backstage passes to a TAFKAL80ETC concert"
 
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
       if @quality > 0
@@ -83,5 +84,14 @@ class GildedRose
   def sulfuras
     # @quality = 80
     # @days_remaining = @days_remaining - 1
+  end
+
+  def backstage
+    @quality = @quality + 1
+    @quality = @quality + 1 if @days_remaining < 11
+    @quality = @quality + 1 if @days_remaining < 6
+    @quality = 0 if @days_remaining <= 0
+    @quality = 50 if @quality > 50
+    @days_remaining = @days_remaining - 1
   end
 end
