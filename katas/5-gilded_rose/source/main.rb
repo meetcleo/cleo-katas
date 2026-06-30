@@ -35,9 +35,27 @@ class GildedRose
     end
   end
 
+  def tick_brie
+    if @days_remaining > 0
+      @quality += 1
+    else
+      @quality += 2
+    end
+
+    if @quality >= 50
+      @quality = 50
+    end
+
+    @days_remaining -= 1
+  end
+
   def tick
     if @name == 'Normal Item'
       return tick_normal
+    end
+
+    if @name == 'Aged Brie'
+      return tick_brie
     end
 
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
