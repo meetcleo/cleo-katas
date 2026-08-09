@@ -7,3 +7,5 @@ ruby file: "./.ruby-version"
 gem "thor", "~> 1.3"
 
 gem "rubocop", "~> 1.68"
+
+gem 'minitest'
